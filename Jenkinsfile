@@ -111,15 +111,15 @@ pipeline {
         }
 
         success {
-            echo "✅ BUILD SUCCESSFUL"
+            echo " BUILD SUCCESSFUL"
         }
 
         failure {
-            echo "❌ BUILD FAILED"
+            echo " BUILD FAILED"
         }
 
         unstable {
-            echo "⚠️ BUILD UNSTABLE"
+            echo " BUILD UNSTABLE"
         }
     }
 }
