@@ -4,14 +4,14 @@ folder('demo1') {
 }
 
 folder('demo1/demo2') {
-    description('Nested folder under test1')
+    description('Nested folder under demo1')
 }
 
 def sharedWs = '/home/jenkins/java-shared-wspace'
 
-// Job inside test1
+// Job 1: Checkout source code
 job('demo1/job1') {
-    description('Freestyle job1 inside test1 folder')
+    description('Checkout Java project source code')
 
     customWorkspace(sharedWs)
     concurrentBuild(false)
@@ -26,27 +26,25 @@ job('demo1/job1') {
     }
 
     steps {
-        shell('echo "Running test1/job1"')
+        shell('''
+            echo "Source code checked out"
+            ls -l
+        ''')
     }
 }
 
-// Job inside test1/test2
+// Job 2: Build code checked out by job1
 job('demo1/demo2/job2') {
-    description('Freestyle job2 inside demo1/demo2 folder')
+    description('Build using Maven from shared workspace')
 
     customWorkspace(sharedWs)
     concurrentBuild(false)
 
-    scm {
-        git {
-            remote {
-                url('https://github.com/478mkharb/Jenkins.git')
-            }
-            branch('*/main')
-        }
-    }
-
     steps {
-        shell('echo "Running test1/test2/job2"')
+        shell('''
+            echo "Running Maven build from shared workspace"
+            pwd
+            mvn clean package -DskipTests
+        ''')
     }
 }
