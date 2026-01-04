@@ -1,15 +1,13 @@
-// Create folders
 folder('demo1') {
     description('Parent folder')
 }
 
 folder('demo1/demo2') {
-    description('Nested folder under demo1')
+    description('Nested folder')
 }
 
 def sharedWs = '/home/jenkins/java-shared-wspace'
 
-// Job 1: Checkout source code
 job('demo1/job1') {
     description('Checkout Java project source code')
 
@@ -26,25 +24,17 @@ job('demo1/job1') {
     }
 
     steps {
-        shell('''
-            echo "Source code checked out"
-            ls -l
-        ''')
+        shell('echo "Running demo1/job1"')
     }
 }
 
-// Job 2: Build code checked out by job1
 job('demo1/demo2/job2') {
-    description('Build using Maven from shared workspace')
+    description('Build using source from job1 workspace')
 
     customWorkspace(sharedWs)
     concurrentBuild(false)
 
     steps {
-        shell('''
-            echo "Running Maven build from shared workspace"
-            pwd
-            mvn clean package -DskipTests
-        ''')
+        shell('mvn clean package -DskipTests')
     }
 }
