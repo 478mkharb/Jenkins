@@ -24,7 +24,11 @@ job('demo1/job1') {
     }
 
     steps {
-        shell('echo "Running demo1/job1"')
+        shell '''
+            echo "Running demo1/job1"
+            echo "Workspace: $(pwd)"
+            ls -l
+        '''
     }
 }
 
@@ -35,6 +39,17 @@ job('demo1/demo2/job2') {
     concurrentBuild(false)
 
     steps {
-        shell('mvn clean package -DskipTests')
+        shell '''
+            echo "Running demo1/demo2/job2"
+            echo "Workspace: $(pwd)"
+
+            # safety check
+            if [ ! -f pom.xml ]; then
+                echo "ERROR: Source code not found. Run job1 first."
+                exit 1
+            fi
+
+            mvn clean package -DskipTests
+        '''
     }
 }
