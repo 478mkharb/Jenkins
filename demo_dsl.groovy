@@ -1,3 +1,7 @@
+// -------------------------------
+// Job DSL Script: demo_dsl.groovy
+// -------------------------------
+
 folder('demo1') {
     description('Parent folder')
 }
@@ -43,7 +47,7 @@ job('demo1/demo2/job2') {
             echo "Running demo1/demo2/job2"
             echo "Workspace: $(pwd)"
 
-            # safety check
+            # Safety check
             if [ ! -f pom.xml ]; then
                 echo "ERROR: Source code not found. Run job1 first."
                 exit 1
