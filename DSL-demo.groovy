@@ -7,7 +7,7 @@ folder('demo1/demo2') {
     description('Nested folder under test1')
 }
 
-def sharedWs = '/home/jenkins/shared-workspace'
+def sharedWs = '/home/jenkins/java-shared-wspace'
 
 // Job inside test1
 job('demo1/job1') {
@@ -32,7 +32,7 @@ job('demo1/job1') {
 
 // Job inside test1/test2
 job('demo1/demo2/job2') {
-    description('Freestyle job2 inside test1/test2 folder')
+    description('Freestyle job2 inside demo1/demo2 folder')
 
     customWorkspace(sharedWs)
     concurrentBuild(false)
